@@ -1,0 +1,1083 @@
+{
+  "name": "PROYECTO: AI LEAD AUTOMATION SYSTEM",
+  "nodes": [
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "2b231b34-d7fe-4c2a-9248-50ea89caf69d",
+              "leftValue": "={{ $json.score }}",
+              "rightValue": 70,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -224,
+        320
+      ],
+      "id": "902a036f-bbde-448b-94ff-19ae808aa03d",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.Email }}",
+        "subject": "Gracias por contactarnos",
+        "emailType": "text",
+        "message": "=Hola  {{ $('Edit Fields1').item.json.Nombre }}.\n\nGracias por contactarnos.\nHemos recibido tu solicitud y pronto nos pondremos en contacto contigo.\n\n¡Un saludo!",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        -112,
+        96
+      ],
+      "id": "1f6e09c4-4e41-4270-b0c9-5c681e415163",
+      "name": "Send a message",
+      "webhookId": "fd1c5be4-9852-40ad-b644-04a37925942d",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "9nOuZ9ROkL6M7Abk",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.Email }}",
+        "subject": "Recursos para tu negocio",
+        "emailType": "text",
+        "message": "=Hola  {{ $('Edit Fields1').item.json.Nombre }}.\n\nMientras tanto, te compartimos algunos recursos que pueden serte útiles.\n\n¡Un saludo!",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        -16,
+        336
+      ],
+      "id": "aec0e90d-7840-47c2-ac45-833eb8bd5704",
+      "name": "Send a message1",
+      "webhookId": "cff6f430-0e2f-4c0d-bfff-4649d361583b",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "9nOuZ9ROkL6M7Abk",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 1,
+        "unit": "minutes"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        624,
+        336
+      ],
+      "id": "565d67c9-d855-4056-acf8-12ed3a97eef2",
+      "name": "Wait",
+      "webhookId": "60f26a38-0253-494c-aea4-b889aca8f005"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://app-eu1.hubspot.com/reports-dashboard/148499184/view/112502784",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "hubspotAppToken",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        736,
+        96
+      ],
+      "id": "c9be2c1f-bd8f-44fc-aada-56f640bf5e16",
+      "name": "HTTP Request1",
+      "credentials": {
+        "slackApi": {
+          "id": "cxF7pMhsfi6LjAVB",
+          "name": "Slack account 2"
+        },
+        "hubspotAppToken": {
+          "id": "wMg0FvDA3fe3vPo6",
+          "name": "HubSpot App Token account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "081a2836-c9ae-46ba-8150-d8294d28bc4f",
+              "leftValue": "={{ $('Create or update a contact').item.json.properties.hs_messaging_engagement_score }}",
+              "rightValue": "0",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        848,
+        336
+      ],
+      "id": "d48b1e6b-6635-456a-83b4-ca9855ff8858",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('On form submission').item.json.Email }}",
+        "subject": "¿Sigues interesado?",
+        "emailType": "text",
+        "message": "=Hola  {{ $('On form submission').item.json.Nombre }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1104,
+        208
+      ],
+      "id": "260325f4-69ff-4ed3-93ae-b2089adc95ad",
+      "name": "Send a message2",
+      "webhookId": "2a765941-84b6-4754-8203-f6ccea178d82",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "9nOuZ9ROkL6M7Abk",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1bqHP5G_lKeustNa414C7uvEv2aTgzNq2zddYOpuYPA8",
+          "mode": "list",
+          "cachedResultName": "ALAS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1bqHP5G_lKeustNa414C7uvEv2aTgzNq2zddYOpuYPA8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1bqHP5G_lKeustNa414C7uvEv2aTgzNq2zddYOpuYPA8/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Email": "={{ $('Edit Fields1').item.json.Email }}",
+            "score": "={{ $json.score }}",
+            "prioridad": "={{ $json.prioridad }}",
+            "intencion": "={{ $json.intencion }}",
+            "resumen": "={{ $json.resumen }}"
+          },
+          "matchingColumns": [
+            "Email"
+          ],
+          "schema": [
+            {
+              "id": "Nombre",
+              "displayName": "Nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Empresa",
+              "displayName": "Empresa",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Problema",
+              "displayName": "Problema",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Timestamp",
+              "displayName": "Timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "formMode",
+              "displayName": "formMode",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "text",
+              "displayName": "text",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "error",
+              "displayName": "error",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "score",
+              "displayName": "score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "prioridad",
+              "displayName": "prioridad",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "intencion",
+              "displayName": "intencion",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "resumen",
+              "displayName": "resumen",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -336,
+        96
+      ],
+      "id": "e8e1e5eb-14e7-43d9-8182-294d5e453c13",
+      "name": "Agregar o actualizar fila en la hoja",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Jfv86xZViYGDZZ7d",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1bqHP5G_lKeustNa414C7uvEv2aTgzNq2zddYOpuYPA8",
+          "mode": "list",
+          "cachedResultName": "ALAS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1bqHP5G_lKeustNa414C7uvEv2aTgzNq2zddYOpuYPA8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1bqHP5G_lKeustNa414C7uvEv2aTgzNq2zddYOpuYPA8/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Nombre": "={{ $json.Nombre }}",
+            "Email": "={{ $json.Email }}",
+            "Empresa": "={{ $json.Empresa }}",
+            "Problema": "={{ $json.Problema }}",
+            "Timestamp": "={{ $json.Timestamp }}",
+            "formMode": "={{ $json.formMode }}"
+          },
+          "matchingColumns": [
+            "Email"
+          ],
+          "schema": [
+            {
+              "id": "Nombre",
+              "displayName": "Nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Empresa",
+              "displayName": "Empresa",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Problema",
+              "displayName": "Problema",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Timestamp",
+              "displayName": "Timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "formMode",
+              "displayName": "formMode",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -928,
+        96
+      ],
+      "id": "dfc9b72d-6362-4180-95c6-be41dce64f0e",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Jfv86xZViYGDZZ7d",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a681edbb-bffa-4990-a07e-dc70cef42c5e",
+              "name": "Nombre",
+              "value": "={{ $json.Nombre }}",
+              "type": "string"
+            },
+            {
+              "id": "47536015-97eb-4a90-8a26-4cdbf921ced3",
+              "name": "Email",
+              "value": "={{ $json.Email }}",
+              "type": "string"
+            },
+            {
+              "id": "b0640999-780b-47db-b1f8-cc0d4844828e",
+              "name": "Empresa",
+              "value": "={{ $json.Empresa }}",
+              "type": "string"
+            },
+            {
+              "id": "45a70f01-5bce-4d37-a816-31cc40199358",
+              "name": "Problema",
+              "value": "={{ $json.Problema }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -816,
+        336
+      ],
+      "id": "8e3feef0-8a8a-4232-9ad0-59c7da641346",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Analiza este lead y clasificalo.\nDevuelveme un JSON:\n\n-\"score\": (1-100)\n\n-\"intencion\"\n\n-\"resumen\"\n\nLead:\n\nNombre:\n{{ $json.Nombre }}\nEmpresa: \n{{ $json.Empresa }}\nProblema:\n{{ $json.Problema }}",
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        -688,
+        96
+      ],
+      "id": "f059ec84-e6b0-4541-8aaf-cfad558a381c",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5-nano",
+          "mode": "list",
+          "cachedResultName": "gpt-5-nano"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -688,
+        352
+      ],
+      "id": "dde66769-7174-47b1-84eb-a5a4b84799bd",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "phFuFxX6MoveqweM",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": []
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1bqHP5G_lKeustNa414C7uvEv2aTgzNq2zddYOpuYPA8",
+          "mode": "list",
+          "cachedResultName": "ALAS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1bqHP5G_lKeustNa414C7uvEv2aTgzNq2zddYOpuYPA8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1bqHP5G_lKeustNa414C7uvEv2aTgzNq2zddYOpuYPA8/edit#gid=0"
+        },
+        "includeInOutput": "both",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1040,
+        336
+      ],
+      "id": "d0e1af79-2bb7-4dd5-97f4-d0d8576ddd84",
+      "name": "Google Sheets Trigger",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "PxjgAQm2GMjTDSG9",
+          "name": "Google Sheets Trigger account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "formTitle": "Formulario de contacto",
+        "formDescription": "Gracias por su solicitud. Contactaremos con usted a la mayor brevedad posible.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Nombre",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Email",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Empresa",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Problema",
+              "fieldType": "textarea",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Timestamp",
+              "fieldType": "date"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.5,
+      "position": [
+        -1136,
+        96
+      ],
+      "id": "2b578dd2-3b43-4172-82ec-de92b95484a9",
+      "name": "On form submission",
+      "webhookId": "830323cb-cc4c-4886-b69e-beef2921b0d8"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const raw = $input.item.json.text ?? '';\n\nconst objMatch = raw.match(/(\\{[\\s\\S]*\\})/);\nconst jsonStr = objMatch ? objMatch[1].trim() : raw.trim();\n\nlet parsed;\ntry {\n  parsed = JSON.parse(jsonStr);\n} catch (e) {\n  return { json: { error: 'Parse error: ' + jsonStr.substring(0, 200), score: 0, prioridad: 'baja', intencion: '', resumen: '' } };\n}\n\nreturn {\n  json: {\n    score:     typeof parsed.score === 'number' ? parsed.score : parseInt(parsed.score) || 0,\n    prioridad: parsed.prioridad ?? 'baja',\n    intencion: parsed.intencion ?? parsed['intención'] ?? '',\n    resumen:   parsed.resumen ?? ''\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -448,
+        320
+      ],
+      "id": "778b3eaf-5287-45a2-bba8-29ceb73787fa",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1bqHP5G_lKeustNa414C7uvEv2aTgzNq2zddYOpuYPA8",
+          "mode": "list",
+          "cachedResultName": "ALAS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1bqHP5G_lKeustNa414C7uvEv2aTgzNq2zddYOpuYPA8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1bqHP5G_lKeustNa414C7uvEv2aTgzNq2zddYOpuYPA8/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Email": "={{ $('If1').item.json.Email }}",
+            "score": "={{ $('If1').item.json.score }}",
+            "intencion": "={{ $('If1').item.json.intencion }}",
+            "resumen": "={{ $('If1').item.json.resumen }}",
+            "prioridad": "={{ $('If1').item.json.prioridad }}",
+            "Empresa": "={{ $('Edit Fields1').item.json.Empresa }}",
+            "Problema": "={{ $('Edit Fields1').item.json.Problema }}",
+            "Nombre": "={{ $('Edit Fields1').item.json.Nombre }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Nombre",
+              "displayName": "Nombre",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Empresa",
+              "displayName": "Empresa",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Problema",
+              "displayName": "Problema",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Timestamp",
+              "displayName": "Timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "formMode",
+              "displayName": "formMode",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "text",
+              "displayName": "text",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "error",
+              "displayName": "error",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "score",
+              "displayName": "score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "prioridad",
+              "displayName": "prioridad",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "intencion",
+              "displayName": "intencion",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "resumen",
+              "displayName": "resumen",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        192,
+        336
+      ],
+      "id": "40e5da4b-6cd2-4901-9cd9-2f118ed3c8d1",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Jfv86xZViYGDZZ7d",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "appToken",
+        "email": "={{ $('Agregar o actualizar fila en la hoja').item.json.Email }}",
+        "additionalFields": {
+          "companyName": "={{ $('Edit Fields1').item.json.Empresa }}",
+          "firstName": "={{ $('Edit Fields1').item.json.Nombre }}"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2.2,
+      "position": [
+        96,
+        96
+      ],
+      "id": "dfdf8550-d859-4fc3-9a6f-2b26fdc9eb41",
+      "name": "Create or update a contact",
+      "credentials": {
+        "hubspotAppToken": {
+          "id": "fpwy7TKeZx1BwaXo",
+          "name": "HubSpot App Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "n8n_integrations",
+          "mode": "name"
+        },
+        "text": "=¡NUEVO LEAD!\n\nNOMBRE: {{ $('Edit Fields1').item.json.Nombre }}\nEMAIL: {{ $('Edit Fields1').item.json.Email }}",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.4,
+      "position": [
+        304,
+        96
+      ],
+      "id": "8d2400c2-7f9a-4832-b3c8-945de239e618",
+      "name": "Send a message3",
+      "webhookId": "4909cdc8-dd8a-4051-919a-cf0f60637aef",
+      "credentials": {
+        "slackApi": {
+          "id": "cxF7pMhsfi6LjAVB",
+          "name": "Slack account 2"
+        }
+      },
+      "onError": "continueRegularOutput"
+    }
+  ],
+  "pinData": {
+    "On form submission": [
+      {
+        "json": {
+          "Nombre": "NORDIN MM",
+          "Email": "nordinmm28@gmail.com",
+          "Empresa": "NORDIN SOLUTIONS S.L.",
+          "Problema": "AUTOMATIZACIONES PARA LA GESTIÓN DE LEADS SEGÚN PRIORIDAD Y NECESIDAD DEL CLIENTE.",
+          "Timestamp": "2026-05-17",
+          "submittedAt": "2026-05-17T13:24:34.927+02:00",
+          "formMode": "test"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Create or update a contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message1": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Send a message2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agregar o actualizar fila en la hoja": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Agregar o actualizar fila en la hoja",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create or update a contact": {
+      "main": [
+        [
+          {
+            "node": "Send a message3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message3": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "2b239bc0-8ec2-4d14-a6f8-960f3a707119",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "33821b72dae919503d680e3ddc300734d9ecf45f64776fd52838d87d5889b7be"
+  },
+  "id": "hnMQ9Mh6MXMgjuxM",
+  "tags": []
+}
